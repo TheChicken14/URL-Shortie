@@ -5,6 +5,7 @@ const withAuth = function (req, res, next) {
     const token =
         req.body.token ||
         req.query.token ||
+        req.cookies["token"] ||
         req.header('x-access-token') ||
         req.header('Authorization')
 
