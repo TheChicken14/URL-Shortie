@@ -43,7 +43,17 @@ router.post('/create', withAuth, async (req, res) => {
     })
 })
 
-router.get("/all", withAuth, (req, res) => { })
+router.get("/all", withAuth, async (req, res) => {
+    const allLinks = await Url.find({}).lean()
+    const formattedLinks = allLinks.map(l => ({
+        shortCode: l.shortCode,
+        longUrl: l.longUrl,
+        title: l.title,
+        createdBy: l.createdBy,
+        clickCount: l.clickCount
+    }))
+    res.json(formattedLinks)
+})
 
 module.exports = {
     name: "Links",
