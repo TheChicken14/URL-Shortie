@@ -45,6 +45,9 @@ router.post('/create', withAuth, async (req, res) => {
 
 router.get("/all", withAuth, async (req, res) => {
     const allLinks = await Url.find({}).lean()
+    if (allLinks.length < 1) {
+        return res.json([])
+    }
     const formattedLinks = allLinks.map(l => ({
         shortCode: l.shortCode,
         longUrl: l.longUrl,
