@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
 const User = require('../db/models/User')
+const InvalidToken = require("../db/models/InvalidToken")
 const secret = require("../config").secret
 const withAuth = require('../middleware');
 
@@ -73,6 +74,24 @@ router.post('/authenticate', function (req, res) {
         }
     });
 });
+
+router.post("/logout", withAuth, async (req, res) => {
+    try {
+        const newInvalidToken = new InvalidToken({
+            token: req.token
+        })
+        await newInvalidToken.save()
+        res.json({
+            message: "Successfully logged out.",
+            success: true
+        })
+    } catch (e) {
+        res.status(500).json({
+            message: "An error occurred!"
+        })
+        console.error(e)
+    }
+})
 
 router.get("/firstLogin", async (req, res) => {
     const users = await User.find({})
