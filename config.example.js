@@ -5,5 +5,6 @@ module.exports = {
     db: {
         mongouri: `mongodb://localhost:27017/urlshortener` // MongoDB URI
     },
-    secret: 'your-secret' // Secret for JWT Token
+    secret: 'your-secret', // Secret for JWT Token
+    dev: true // Set to true if working with development env
 }
