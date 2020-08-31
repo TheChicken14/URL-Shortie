@@ -2,22 +2,10 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 import axios from "axios";
-
-const useStyles = (theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: "3rem",
-  },
-  paper: {
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-});
 
 export default function withAuth(ComponentToProtect) {
   class withAuthClass extends Component {
@@ -46,14 +34,20 @@ export default function withAuth(ComponentToProtect) {
 
     render() {
       const { loading, redirect } = this.state;
-      const { classes } = this.props;
+
       if (loading) {
         return (
-          <div className={classes.root}>
+          <div>
             <Grid container>
               <Grid item xs={12}>
-                <Paper elevation={0} className={classes.paper}>
-                  <CircularProgress />
+                <Paper
+                  elevation={0}
+                  style={{
+                    textAlign: "center",
+                    marginTop: "5rem",
+                  }}
+                >
+                  <CircularProgress size={80} />
                 </Paper>
               </Grid>
             </Grid>
@@ -66,5 +60,5 @@ export default function withAuth(ComponentToProtect) {
       return <ComponentToProtect {...this.props} />;
     }
   }
-  return withStyles(useStyles)(withAuthClass);
+  return withAuthClass;
 }
