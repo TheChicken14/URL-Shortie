@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Switch, useLocation } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import Home from "./views/Home";
 import Admin from "./views/Admin";
 import LogIn from "./views/Login";
+import LogOut from "./views/LogOut"
 import withAuth from "./components/withAuth";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,9 +35,7 @@ function App() {
           <Typography variant="h6" className={classes.title}>
             URL-Shortie
           </Typography>
-          <Button color="inherit" component={Link} to="/admin">
-            Admin
-          </Button>
+          <AdminOrLogOutButton />
         </Toolbar>
       </AppBar>
 
@@ -44,9 +43,23 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/admin" component={withAuth(Admin)} />
         <Route path="/login" component={LogIn} />
+        <Route path="/logout" component={LogOut} />
       </Switch>
     </Router>
   );
 }
 
 export default App;
+
+function AdminOrLogOutButton() {
+  let location = useLocation();
+  return location.pathname === "/admin" ? (
+    <Button color="inherit" component={Link} to="/logout">
+      Log out
+    </Button>
+  ) : (
+      <Button color="inherit" component={Link} to="/admin">
+        Admin
+      </Button>
+    )
+}
