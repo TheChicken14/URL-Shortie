@@ -7,6 +7,8 @@ router.get('/:id', async (req, res) => {
     const shortUrl = await Url.findOne({ shortCode: req.params.id })
     if (shortUrl) {
         res.redirect(shortUrl.longUrl)
+        shortUrl.clickCount++
+        await shortUrl.save()
     } else {
         res.status(404).json({
             message: "Not found!"
