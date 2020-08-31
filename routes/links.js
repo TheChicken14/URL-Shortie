@@ -43,6 +43,27 @@ router.post('/create', withAuth, async (req, res) => {
     })
 })
 
+router.delete("/delete", withAuth, async (req, res) => {
+    const id = req.body.id || req.query.id;
+    if (!id) {
+        return res.status(400).json({
+            message: 'No ID provided.'
+        })
+    }
+    const foundUrl = await Url.findOne({ shortCode: id })
+    if (foundUrl) {
+        await foundUrl.remove()
+        res.json({
+            message: "URL Deleted.",
+            success: true
+        })
+    } else {
+        res.status(404).json({
+            message: "URL not found."
+        })
+    }
+})
+
 router.get("/all", withAuth, async (req, res) => {
     const allLinks = await Url.find({}).lean()
     if (allLinks.length < 1) {
