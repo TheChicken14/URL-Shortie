@@ -62,7 +62,7 @@ router.post('/authenticate', function (req, res) {
                     // Issue token
                     const payload = { email };
                     const token = jwt.sign(payload, secret, {
-                        expiresIn: '1h'
+                        expiresIn: '6h'
                     });
                     res.cookie('token', token, { httpOny: true });
                     res.json({
