@@ -27,9 +27,11 @@ const useStyles = (theme) => ({
   root: {
     marginTop: "5rem",
     flexGrow: 1,
+    maxWidth: "1000px",
   },
   textInput: {
     margin: theme.spacing(1),
+
     width: "100%",
   },
   linkSubtitle: {
@@ -102,41 +104,46 @@ class Admin extends Component {
     return (
       <Container className={classes.root}>
         <Paper style={{ marginBottom: "3rem" }}>
-          <form onSubmit={this.onSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  className={classes.textInput}
-                  id="standard-basic"
-                  label="Enter the URL"
-                  name="longUrl"
-                  required
-                  value={this.state.longUrl}
-                  onChange={this.handleInputChange}
-                />
+          <Container>
+            <form onSubmit={this.onSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    className={classes.textInput}
+                    id="standard-basic"
+                    label="Enter the URL"
+                    name="longUrl"
+                    required
+                    value={this.state.longUrl}
+                    onChange={this.handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <TextField
+                    className={classes.textInput}
+                    id="standard-basic"
+                    label="Custom short URL"
+                    name="customShortUrl"
+                    value={this.state.customShortUrl}
+                    onChange={this.handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    disableElevation
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    Shorten!
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={6} sm={4}>
-                <TextField
-                  className={classes.textInput}
-                  id="standard-basic"
-                  label="Custom short URL"
-                  name="customShortUrl"
-                  value={this.state.customShortUrl}
-                  onChange={this.handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  color="primary"
-                  disableElevation
-                >
-                  Shorten!
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+            </form>
+          </Container>
         </Paper>
 
         {!this.state.loading && !this.state.errored && (
