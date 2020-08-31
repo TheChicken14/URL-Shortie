@@ -3,8 +3,8 @@ module.exports = {
         port: 8888, // Port for server
     },
     db: {
-        mongouri: `mongodb://localhost:27017/urlshortener` // MongoDB URI
+        mongouri: '' // MongoDB URI
     },
     secret: 'your-secret', // Secret for JWT Token
-    dev: true // Set to true if working with development env
+    dev: false // Set to true if working with development env
 }
