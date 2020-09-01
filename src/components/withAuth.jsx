@@ -46,6 +46,7 @@ export default function withAuth(ComponentToProtect) {
                   style={{
                     textAlign: "center",
                     marginTop: "5rem",
+                    backgroundColor: "",
                   }}
                 >
                   <CircularProgress size={80} />
