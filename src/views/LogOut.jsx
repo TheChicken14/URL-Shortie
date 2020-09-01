@@ -11,9 +11,12 @@ export default class LogOut extends Component {
       .then(() => {
         this.props.history.push("/");
       })
-      .catch(() => {
-        alert("An error occurred while logging out.");
-        this.props.history.push("/admin");
+      .catch((e) => {
+        if (e.response && e.response.status === 403) {
+          this.props.history.push("/login");
+        } else {
+          alert("An error occurred while logging out.");
+        }
       });
   }
   render() {
