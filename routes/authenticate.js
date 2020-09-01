@@ -3,6 +3,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken');
 const User = require('../db/models/User')
 const InvalidToken = require("../db/models/InvalidToken")
+const Url = require("../db/models/Url")
 const secret = require("../config").secret
 const withAuth = require('../middleware');
 
@@ -98,6 +99,39 @@ router.get("/registrationStatus", async (req, res) => {
     const firstLogin = users.length < 1
     res.json({
         registration: firstLogin,
+    })
+})
+
+router.get("/details", withAuth, async (req, res) => {
+    const UserData = await User.findOne({ email: req.email }).lean()
+    delete UserData._id
+    delete UserData.__v
+    delete UserData.password
+    res.json(UserData)
+})
+
+router.post("/update", withAuth, async (req, res) => {
+    const UserData = await User.findOne({ email: req.email })
+    const newSettings = req.body
+    if (newSettings.email) {
+        for (const objKey in newSettings) {
+            if (UserData[objKey] !== newSettings[objKey]) UserData[objKey] = newSettings[objKey];
+            else return;
+        }
+    }
+    await User.updateOne(newSettings)
+    res.json({
+        email: newSettings.email,
+        admin: newSettings.admin
+    })
+})
+
+router.delete("/delete", withAuth, async (req, res) => {
+    await User.deleteOne({ email: req.email })
+    await Url.deleteMany({ email: req.email })
+    res.json({
+        message: "Account deleted.",
+        sucess: true
     })
 })
 
