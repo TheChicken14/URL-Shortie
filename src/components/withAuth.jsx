@@ -42,6 +42,7 @@ export default function withAuth(ComponentToProtect) {
               <Grid item xs={12}>
                 <Paper
                   elevation={0}
+                  color="inherit"
                   style={{
                     textAlign: "center",
                     marginTop: "5rem",
