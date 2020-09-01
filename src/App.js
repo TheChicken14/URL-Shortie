@@ -13,6 +13,7 @@ import LogIn from "./views/Login";
 import Register from "./views/Register"
 import LogOut from "./views/LogOut"
 import withAuth from "./components/withAuth";
+import Account from "./views/Account"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,7 @@ function App() {
             Home
           </Button>
           <span className={classes.spacer}></span>
+          <AccountButton />
           <AdminOrLogOutButton />
         </Toolbar>
       </AppBar>
@@ -50,6 +52,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/login" component={LogIn} />
         <Route path="/logout" component={LogOut} />
+        <Route path="/account" component={withAuth(Account)} />
       </Switch>
     </Router>
   );
@@ -65,7 +68,15 @@ function AdminOrLogOutButton() {
     </Button>
   ) : (
       <Button color="inherit" component={Link} to="/admin">
-        Admin
+        Dashboard
       </Button>
     )
+}
+function AccountButton() {
+  let location = useLocation();
+  return location.pathname === "/admin" ? (
+    <Button color="inherit" component={Link} to="/account">
+      Account
+    </Button>
+  ) : null
 }
