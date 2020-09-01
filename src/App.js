@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import Home from "./views/Home";
 import Admin from "./views/Admin";
 import LogIn from "./views/Login";
+import Register from "./views/Register"
 import LogOut from "./views/LogOut"
 import withAuth from "./components/withAuth";
 
@@ -46,6 +47,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/admin" component={withAuth(Admin)} />
+        <Route path="/register" component={Register} />
         <Route path="/login" component={LogIn} />
         <Route path="/logout" component={LogOut} />
       </Switch>
