@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
         })
     }
 
-    const isAdmin = allUsers.length == 0
+    const isAdmin = allUsers.length === 0
 
     const user = new User({ email, password, admin: isAdmin });
     user.save(function (err) {
@@ -93,11 +93,11 @@ router.post("/logout", withAuth, async (req, res) => {
     }
 })
 
-router.get("/firstLogin", async (req, res) => {
+router.get("/registrationStatus", async (req, res) => {
     const users = await User.find({})
     const firstLogin = users.length < 1
     res.json({
-        firstLogin
+        registration: firstLogin,
     })
 })
 
