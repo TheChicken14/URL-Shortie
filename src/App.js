@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  spacer: {
     flexGrow: 1,
   },
 }));
@@ -32,9 +32,13 @@ function App() {
     <Router className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6">
             URL-Shortie
           </Typography>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
+          <span className={classes.spacer}></span>
           <AdminOrLogOutButton />
         </Toolbar>
       </AppBar>
