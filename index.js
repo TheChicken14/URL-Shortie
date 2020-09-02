@@ -6,9 +6,16 @@ const cookieParser = require('cookie-parser');
 const fs = require("fs")
 const path = require("path")
 
+const packageJson = require("./package.json")
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+// Disable "x-powered-by" header
+app.use((req, res, next) => {
+    res.setHeader("X-Powered-By", `URL-Shortie v${packageJson.version}`);
+    next()
+})
 
 const connectDB = require('./db/index')
 connectDB()
