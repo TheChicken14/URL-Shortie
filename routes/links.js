@@ -11,14 +11,7 @@ const withAuth = require('../middleware');
 // eslint-disable-next-line no-useless-escape
 const UrlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g
 
-const reservedUrls = [
-    'admin',
-    'account',
-    'dashboard',
-    'login',
-    'logout',
-    'register'
-]
+const reservedUrls = require("../reservedUrls")
 
 router.post('/create', withAuth, async (req, res) => {
     const { url, id, title } = req.body;
