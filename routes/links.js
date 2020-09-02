@@ -8,6 +8,15 @@ const getWebsiteTitle = require("../functions/getWebsiteTitle")
 
 const withAuth = require('../middleware');
 
+const reservedUrls = [
+    'admin',
+    'account',
+    'dashboard',
+    'login',
+    'logout',
+    'register'
+]
+
 router.post('/create', withAuth, async (req, res) => {
     const { url, id, title } = req.body;
     if (!url) {
@@ -16,15 +25,29 @@ router.post('/create', withAuth, async (req, res) => {
         })
     }
 
-    const foundUrl = await Url.findOne({ longUrl: url }).lean()
-    if (foundUrl) {
-        delete foundUrl._id
-        delete foundUrl.__v
-        res.json(foundUrl)
+    const shortCode = id ? id.toLowerCase() : shortid.generate()
+    const defTitle = title || await getWebsiteTitle(url)
+
+    if (reservedUrls.indexOf(shortCode) !== -1) {
+        return res.status(401).json({
+            message: 'URL Not allowed',
+            type: 'urlNotAllowed'
+        })
+    }
+    if (shortCode.length < 5 || shortCode.length > 31) {
+        return res.status(400).json({
+            message: 'Custom short URL must be between 5 and 30 characters',
+            type: shortCode.length < 5 ? 'urlTooShort' : 'urlTooLong'
+        })
     }
 
-    const shortCode = id || shortid.generate()
-    const defTitle = title || await getWebsiteTitle(url)
+    const doesIdExist = await Url.findOne({ shortCode })
+    if (doesIdExist) {
+        return res.status(400).json({
+            message: 'Short URL exists.',
+            type: 'urlAlreadyExists'
+        })
+    }
 
     const newShortUrl = new Url({
         shortCode,
