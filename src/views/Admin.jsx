@@ -49,6 +49,8 @@ class Admin extends Component {
       errored: false,
       longUrl: "",
       customShortUrl: "",
+      shortUrlError: false,
+      shortUrlErrorMessage: "",
     };
   }
 
@@ -65,9 +67,17 @@ class Admin extends Component {
 
   handleInputChange = (event) => {
     const { value, name } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    if (this.state.shortUrlError) {
+      this.setState({
+        shortUrlError: false,
+        shortUrlErrorMessage: "",
+        [name]: value,
+      });
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
   };
 
   onSubmit = (event) => {
@@ -87,7 +97,7 @@ class Admin extends Component {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
+      .then(() => {
         this.setState({
           longUrl: "",
           customShortUrl: "",
@@ -96,6 +106,29 @@ class Admin extends Component {
       })
       .catch((err) => {
         console.error(err);
+        if (err.response.status === 401 || err.response.status === 400) {
+          if (err.response.data.type === "urlNotAllowed") {
+            this.setState({
+              shortUrlError: true,
+              shortUrlErrorMessage: "You cannot use this URL",
+            });
+          } else if (err.response.data.type === "urlAlreadyExists") {
+            this.setState({
+              shortUrlError: true,
+              shortUrlErrorMessage: "Short URL Already exists",
+            });
+          } else if (err.response.data.type === "urlTooShort") {
+            this.setState({
+              shortUrlError: true,
+              shortUrlErrorMessage: "Must be at least 5 characters",
+            });
+          } else if (err.response.data.type === "urlTooLong") {
+            this.setState({
+              shortUrlError: true,
+              shortUrlErrorMessage: "Can't be longer than 30 characters",
+            });
+          }
+        }
       });
   };
 
@@ -113,6 +146,7 @@ class Admin extends Component {
                     id="standard-basic"
                     label="Enter the URL"
                     name="longUrl"
+                    type="url"
                     required
                     value={this.state.longUrl}
                     onChange={this.handleInputChange}
@@ -126,6 +160,8 @@ class Admin extends Component {
                     name="customShortUrl"
                     value={this.state.customShortUrl}
                     onChange={this.handleInputChange}
+                    error={this.state.shortUrlError}
+                    helperText={this.state.shortUrlErrorMessage}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -159,9 +195,9 @@ class Admin extends Component {
               </TableHead>
               <TableBody>
                 {this.state.links.map((link) => (
-                  <TableRow key={link.title}>
+                  <TableRow key={link.title || link.longUrl}>
                     <TableCell component="th" scope="row">
-                      <Link href={`/s/${link.shortCode}`} target="_blank">
+                      <Link href={`/${link.shortCode}`} target="_blank">
                         {link.shortCode}
                       </Link>
                     </TableCell>
