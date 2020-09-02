@@ -1,6 +1,6 @@
 {
   "name": "url-shortie",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple URL Shortener!",
   "main": "index.js",
   "license": "MIT",
@@ -29,7 +29,8 @@
     "eject": "react-scripts eject",
     "server": "node index.js -prod",
     "server:dev": "nodemon index.js --ignore \"src/*\"",
-    "setup": "npm i && npm run build"
+    "setup": "npm i && npm run build",
+    "setup:yarn": "yarn && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
