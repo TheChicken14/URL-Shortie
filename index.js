@@ -17,6 +17,10 @@ app.use((req, res, next) => {
     next()
 })
 
+if (config.proxy) {
+    app.set("trust proxy", true)
+}
+
 const connectDB = require('./db/index')
 connectDB()
 
