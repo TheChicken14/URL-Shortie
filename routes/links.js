@@ -32,7 +32,7 @@ router.post('/create', withAuth, async (req, res) => {
         })
     }
 
-    const shortCode = id ? id.toLowerCase() : shortid.generate()
+    let shortCode = id ? id.toLowerCase() : shortid.generate()
     const defTitle = title || await getWebsiteTitle(url)
 
     if (reservedUrls.indexOf(shortCode) !== -1) {
@@ -47,6 +47,7 @@ router.post('/create', withAuth, async (req, res) => {
             type: shortCode.length < 5 ? 'urlTooShort' : 'urlTooLong'
         })
     }
+    shortCode = shortCode.trim().replace(/\s+/g, "-")
 
     const doesIdExist = await Url.findOne({ shortCode })
     if (doesIdExist) {
