@@ -8,6 +8,9 @@ const getWebsiteTitle = require("../functions/getWebsiteTitle")
 
 const withAuth = require('../middleware');
 
+// eslint-disable-next-line no-useless-escape
+const UrlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g
+
 const reservedUrls = [
     'admin',
     'account',
@@ -22,6 +25,10 @@ router.post('/create', withAuth, async (req, res) => {
     if (!url) {
         return res.status(401).json({
             error: 'No URL provided!'
+        })
+    } else if (!UrlRegex.test(url)) {
+        return res.status(400).json({
+            error: 'Invalid URL Provided!'
         })
     }
 
