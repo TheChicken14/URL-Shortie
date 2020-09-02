@@ -5,6 +5,11 @@
 
 ## Setting up
 
+### Requirements
+
+- [NodeJS v12+](https://nodejs.org)
+- [MongoDB](https://www.mongodb.com/) for storing the links, users and expired tokens.
+
 ### Downloading/cloning the project
 
 To clone this repository make sure you have `git` installed. Otherwise you can use wget.
