@@ -123,3 +123,6 @@ config.js
 
 # React build files
 build/
+
+# NPM Package-log
+package-lock.json
