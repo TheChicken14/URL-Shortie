@@ -11,11 +11,17 @@ export default class DeleteLinkButton extends Component {
       params: {
         id: link.shortCode,
       },
-    }).then(() => {
-      if (this.props.reload) {
-        this.props.reload();
-      }
-    });
+    })
+      .then(() => {
+        if (this.props.reload) {
+          this.props.reload();
+        }
+      })
+      .catch(() => {
+        if (this.props.reload) {
+          this.props.reload();
+        }
+      });
   };
   render() {
     return (
