@@ -120,6 +120,7 @@ dist
 
 # Config
 config.js
+config.json
 
 # React build files
 build/
