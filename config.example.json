@@ -1,0 +1,11 @@
+{
+  "web": {
+    "port": 8888
+  },
+  "db": {
+    "mongouri": ""
+  },
+  "secret": "your-secret",
+  "proxy": false,
+  "dev": false
+}
