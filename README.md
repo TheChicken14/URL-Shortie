@@ -50,6 +50,20 @@ npm i
 ### Configuration
 
 Rename `config.example.js` to `config.js`. Then paste your MongoDB URI into the `mongouri` value. Make sure it ends with the database name.
+Here is en explanation of each key in the config:
+```json 
+{
+  "web": {
+    "port": 8888 // Port for webserver
+  },
+  "db": {
+    "mongouri": "" // MongoDB Database URI
+  },
+  "secret": "your-secret", // Secret for JWT Token (change to something random)
+  "proxy": false,// Set to true if using URL-Shortie behind a reverse proxy
+  "dev": false // Set to true if working with development env
+}
+```
 
 ## Updating
 
