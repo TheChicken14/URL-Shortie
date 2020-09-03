@@ -4,13 +4,13 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Announce function for e.g.: announcing that git pull is running
-function announce() {
+announce() {
     echo ""
     echo ${YELLOW} $1 ${NC}
     echo ""
 }
 
-function isUpToDate() {
+isUpToDate() {
     localStatus=$(git log --pretty=%H ...refs/heads/master^)
     remoteStatus=$(git ls-remote origin -h refs/heads/master | cut -f1)
     if [ $localStatus == $remoteStatus ]; then
