@@ -194,7 +194,7 @@ class Admin extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.state.links.map((link) => (
+                {this.state.links.reverse().map((link) => (
                   <TableRow key={link.title || link.longUrl}>
                     <TableCell component="th" scope="row">
                       <Link href={`/${link.shortCode}`} target="_blank">
