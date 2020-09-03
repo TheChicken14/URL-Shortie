@@ -120,7 +120,7 @@ class Admin extends Component {
           } else if (err.response.data.type === "urlTooShort") {
             this.setState({
               shortUrlError: true,
-              shortUrlErrorMessage: "Must be at least 5 characters",
+              shortUrlErrorMessage: "Must be at least 3 characters",
             });
           } else if (err.response.data.type === "urlTooLong") {
             this.setState({

@@ -34,10 +34,10 @@ router.post('/create', withAuth, async (req, res) => {
             type: 'urlNotAllowed'
         })
     }
-    if (shortCode.length < 5 || shortCode.length > 31) {
+    if (shortCode.length < 3 || shortCode.length > 31) {
         return res.status(400).json({
-            message: 'Custom short URL must be between 5 and 30 characters',
-            type: shortCode.length < 5 ? 'urlTooShort' : 'urlTooLong'
+            message: 'Custom short URL must be between 3 and 30 characters',
+            type: shortCode.length < 3 ? 'urlTooShort' : 'urlTooLong'
         })
     }
     shortCode = shortCode.trim().replace(/\s+/g, "-")
