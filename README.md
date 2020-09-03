@@ -26,32 +26,45 @@ Using `wget`:
 wget https://github.com/TheChicken14/URL-Shortie/archive/master.zip
 ```
 
-### Building frontend (optional, but highly recommended)
+### Installing
 
-Building the frontend is not required, but it is recommended, because it makes creating links a lot easier.
-You can do this by running the following command:
+#### Linux/macOS/Bash
+
+If you're on Linux, macOS or a bash shell, you can simply run the `install.sh` script.
+This script will also configure it for you.
 
 ```bash
-npm run setup
+# Make it executable
+$ chmod +x ./install.sh
+$ ./install.sh
 ```
 
-Or if you want to use yarn:
+#### Windows
+
+If you're on windows you can do it like so:
 
 ```bash
+# NPM
+npm run setup
+# Yarn
 yarn setup
 ```
 
-If you decide not to, URL-Shortie will run in API only mode. You will however need to install the dependencies with the following command:
+##### UI
 
 ```bash
-npm i
+# NPM
+npm run build
+# Yarn
+yarn build
 ```
 
-### Configuration
+##### Configuration
 
 Rename `config.example.js` to `config.js`. Then paste your MongoDB URI into the `mongouri` value. Make sure it ends with the database name.
 Here is en explanation of each key in the config:
-```js 
+
+```js
 {
   "web": {
     "port": 8888 // Port for webserver
