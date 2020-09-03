@@ -35,6 +35,12 @@ You can do this by running the following command:
 npm run setup
 ```
 
+Or if you want to use yarn:
+
+```bash
+yarn setup
+```
+
 If you decide not to, URL-Shortie will run in API only mode. You will however need to install the dependencies with the following command:
 
 ```bash
@@ -44,6 +50,10 @@ npm i
 ### Configuration
 
 Rename `config.example.js` to `config.js`. Then paste your MongoDB URI into the `mongouri` value. Make sure it ends with the database name.
+
+## Updating
+
+If you're on macOS or Linux, updating is really easy. Just run the `install.sh` script and it'll pull the new code and rebuild the UI.
 
 ## Usage
 
