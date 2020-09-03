@@ -53,7 +53,7 @@ Rename `config.example.js` to `config.js`. Then paste your MongoDB URI into the 
 
 ## Updating
 
-If you're on macOS or Linux, updating is really easy. Just run the `install.sh` script and it'll pull the new code and rebuild the UI.
+If you're on macOS or Linux, updating is really easy. Just run the `update.sh` script and it'll pull the new code and rebuild the UI.
 
 ## Usage
 
