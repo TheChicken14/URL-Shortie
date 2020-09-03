@@ -57,7 +57,7 @@ class Admin extends Component {
   loadLinks = () => {
     axios
       .get("/api/links/all")
-      .then((r) => this.setState({ links: r.data, loading: false }))
+      .then((r) => this.setState({ links: r.data.reverse(), loading: false }))
       .catch(() => this.setState({ errored: true, loading: false }));
   };
 
@@ -194,7 +194,7 @@ class Admin extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.state.links.reverse().map((link) => (
+                {this.state.links.map((link) => (
                   <TableRow key={link.title || link.longUrl}>
                     <TableCell component="th" scope="row">
                       <Link href={`/${link.shortCode}`} target="_blank">
