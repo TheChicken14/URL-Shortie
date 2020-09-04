@@ -3,7 +3,7 @@ const router = express.Router()
 
 const Url = require('../db/models/Url')
 const shortid = require("shortid")
-
+const Visit = require('../db/models/Visit')
 const getWebsiteTitle = require("../functions/getWebsiteTitle")
 
 const withAuth = require('../middleware');
@@ -65,6 +65,31 @@ router.post('/create', withAuth, async (req, res) => {
         createdBy: req.email,
         clickCount: 0
     })
+})
+
+router.get("/stats/:id", async (req, res) => {
+    const { id } = req.params
+    const foundUrl = await Url.findOne({ shortCode: id })
+    if (!foundUrl) {
+        res.status(404).json({
+            message: "URL not found!",
+            type: "urlNotFound"
+        })
+        return;
+    }
+    const visits = await Visit.find({ shortCode: foundUrl.shortCode })
+    if (!visits[0]) {
+        res.json([])
+    }
+    const formattedVisits = visits.map((visit) => ({
+        shortCode: visit.shortCode,
+        date: visit.date,
+        referrer: visit.referrer,
+        browser: visit.browser,
+        os: visit.os,
+        isBot: visit.isBot
+    }))
+    res.json(formattedVisits)
 })
 
 router.delete("/delete", withAuth, async (req, res) => {
