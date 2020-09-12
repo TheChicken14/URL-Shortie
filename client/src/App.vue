@@ -16,7 +16,7 @@
       v-model="drawer"
     >
       <v-list nav dense shaped>
-        <v-list-item v-for="item in navigation" :key="item.title" link :to="item.to">
+        <v-list-item v-for="item in filteredNavigation" :key="item.title" :to="item.to">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -26,6 +26,15 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn
+            block
+            dark
+            @click="loggedIn ? logout() : login()"
+          >{{ loggedIn ? "Log out" : "Log in" }}</v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-main v-if="loading">
@@ -43,6 +52,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "App",
 
@@ -50,17 +60,50 @@ export default {
     drawer: true,
     navigation: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "Dashboard", icon: "mdi-view-dashboard", to: "/dashboard" },
-      //{ title: "Account", icon: "mdi-account-box" },
+      {
+        title: "Dashboard",
+        icon: "mdi-view-dashboard",
+        to: "/dashboard",
+        login: true,
+      },
+      {
+        title: "Account",
+        icon: "mdi-account-box",
+        to: "/account",
+        login: true,
+      },
       //{ title: "Admin", icon: "mdi-gavel" },
     ],
   }),
   mounted() {
     this.$store.dispatch("checkToken");
   },
+  methods: {
+    logout() {
+      axios.post("/api/user/logout").then(() => {
+        this.$store.commit("SET_LOGGEDIN", false);
+        this.$router.push("/login");
+      });
+    },
+    login() {
+      if (this.$route.path !== "/login") {
+        this.$router.push("/login");
+      }
+    },
+  },
   computed: {
     loading() {
       return this.$store.state.loadingLoggedInStatus;
+    },
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+    filteredNavigation() {
+      if (this.loggedIn) {
+        return this.navigation;
+      } else {
+        return this.navigation.filter((n) => !n.login);
+      }
     },
   },
 };
