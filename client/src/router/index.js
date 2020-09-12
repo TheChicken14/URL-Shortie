@@ -8,10 +8,16 @@ import store from '../store'
 Vue.use(VueRouter)
 
 const withAuth = async (to, from, next) => {
-  await store.dispatch("checkToken")
-  if (!store.state.loggedIn) {
+  if (store.state.loggedIn) {
+    next()
+  } else if (store.state.loadingLoggedInStatus) {
+    await store.dispatch("checkToken")
+    if (!store.state.loggedIn) {
+      next({ name: 'Login' })
+    } else next()
+  } else {
     next({ name: 'Login' })
-  } else next()
+  }
 }
 
 const routes = [
