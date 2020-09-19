@@ -61,7 +61,9 @@ yarn build
 
 ##### Configuration
 
-Rename `config.example.js` to `config.js`. Then paste your MongoDB URI into the `mongouri` value. Make sure it ends with the database name.
+###### Warning: the install script automatically does this for you!
+
+Rename `config.example.json` to `config.json`. Then paste your MongoDB URI into the `mongouri` value. Make sure it ends with the database name.
 Here is en explanation of each key in the config:
 
 ```js
