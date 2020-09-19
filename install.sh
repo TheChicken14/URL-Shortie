@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 # Announce function for e.g.: announcing that git pull is running
 function announce() {
     echo ""
-    echo ${YELLOW} $1 ${NC}
+    echo -e "${YELLOW} $1 ${NC}"
     echo ""
 }
 
