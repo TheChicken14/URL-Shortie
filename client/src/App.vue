@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <div class="d-flex align-center" style="margin-right: 1rem;">
         <h1>URL-Shortie</h1>
       </div>
@@ -12,7 +13,6 @@
       :expand-on-hover="$vuetify.breakpoint.smAndUp"
       :mini-variant="$vuetify.breakpoint.smAndUp"
       clipped
-      permanent
       v-model="drawer"
     >
       <v-list nav dense shaped>
@@ -27,12 +27,8 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
-        <div class="pa-2">
-          <v-btn
-            block
-            dark
-            @click="loggedIn ? logout() : login()"
-          >{{ loggedIn ? "Log out" : "Log in" }}</v-btn>
+        <div class="pa-2" v-if="loggedIn">
+          <v-btn block dark @click="login()">Log out</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -57,7 +53,7 @@ export default {
   name: "App",
 
   data: () => ({
-    drawer: true,
+    drawer: false,
     navigation: [
       { title: "Home", icon: "mdi-home", to: "/" },
       {
@@ -72,11 +68,18 @@ export default {
         to: "/account",
         login: true,
       },
+      {
+        title: "Log in",
+        icon: "mdi-account-key",
+        to: "/login",
+        loggedOut: true,
+      },
       //{ title: "Admin", icon: "mdi-gavel" },
     ],
   }),
   mounted() {
     this.$store.dispatch("checkToken");
+    this.drawer = this.$vuetify.breakpoint.smAndUp;
   },
   methods: {
     logout() {
@@ -100,7 +103,7 @@ export default {
     },
     filteredNavigation() {
       if (this.loggedIn) {
-        return this.navigation;
+        return this.navigation.filter((n) => !n.loggedOut);
       } else {
         return this.navigation.filter((n) => !n.login);
       }
