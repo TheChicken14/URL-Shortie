@@ -43,6 +43,16 @@ announce "Configuring URL-Shortie"
 
 node configure.js
 
+cd client
+
+announce "Installing UI Dependencies"
+
+if [ $pManager == 'yarn' ]; then
+    yarn
+else
+    npm install
+fi
+
 announce "Building UI..."
 
 if [ $pManager == 'yarn' ]; then
