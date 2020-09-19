@@ -12,7 +12,7 @@ const isBot = require("isbot")
 
 router.get('/:id', useragent.express(), async (req, res) => {
     if (reservedUrls.indexOf(req.params.id.toLowerCase()) !== -1 && process.env.NODE_ENV === 'production') {
-        return res.sendFile(path.resolve("./build/index.html"))
+        return res.sendFile(path.resolve("./client/dist/index.html"))
     }
     const shortUrl = await Url.findOne({ shortCode: req.params.id })
     if (shortUrl) {

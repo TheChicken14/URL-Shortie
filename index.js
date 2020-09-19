@@ -33,10 +33,10 @@ routes.forEach(r => {
 
 if (!config.dev || process.argv[2] === "-prod") {
     process.env.NODE_ENV = "production"
-    if (fs.existsSync("./build")) {
-        app.use(express.static('./build'))
+    if (fs.existsSync("./client/dist")) {
+        app.use(express.static('./client/dist'))
         app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname + '/build/index.html'));
+            res.sendFile(path.join(__dirname + 'client/dist/index.html'));
         });
     } else {
         console.warn("[WARNING] You don't have the frontend built. API Only mode is now active.")
