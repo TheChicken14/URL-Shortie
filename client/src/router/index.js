@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Account from '../views/Account.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -33,10 +34,16 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'About',
+    name: 'Dashboard',
     component: Dashboard,
     beforeEnter: withAuth
   },
+  {
+    path: '/account',
+    name: "Account",
+    component: Account,
+    beforeEnter: withAuth
+  }
   // {
   //   path: '/about',
   //   name: 'About',
