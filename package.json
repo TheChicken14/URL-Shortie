@@ -23,7 +23,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "url-regex": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,7 +32,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "node index.js -prod",
-    "server:dev": "nodemon index.js --ignore \"src/*\"",
+    "server:dev": "nodemon index.js --ignore \"client/*\"",
     "setup": "npm i && npm run build",
     "setup:yarn": "yarn && yarn build"
   },
