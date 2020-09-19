@@ -8,10 +8,9 @@ const getWebsiteTitle = require("../functions/getWebsiteTitle")
 
 const withAuth = require('../middleware');
 
-// eslint-disable-next-line no-useless-escape
-const UrlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g
-
 const reservedUrls = require("../reservedUrls")
+
+const urlRegex = require('url-regex');
 
 router.post('/create', withAuth, async (req, res) => {
     const { url, id, title } = req.body;
@@ -19,13 +18,13 @@ router.post('/create', withAuth, async (req, res) => {
         return res.status(401).json({
             error: 'No URL provided!'
         })
-    } else if (!UrlRegex.test(url)) {
+    } else if (!urlRegex({ exact: true, strict: false }).test(url)) {
         return res.status(400).json({
             error: 'Invalid URL Provided!'
         })
     }
 
-    let shortCode = id ? id.toLowerCase() : shortid.generate()
+    let shortCode = id ? id : shortid.generate()
     const defTitle = title || await getWebsiteTitle(url)
 
     if (reservedUrls.indexOf(shortCode) !== -1) {
@@ -81,6 +80,7 @@ router.get("/stats/:id", async (req, res) => {
     if (!visits[0]) {
         res.json([])
     }
+    // TODO: add link data instead of just an array of visits
     const formattedVisits = visits.map((visit) => ({
         shortCode: visit.shortCode,
         date: visit.date,
