@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <v-container max-width="sm">
+    <v-container style="max-width: 1000px;">
       <v-form @submit="shortenLink" v-model="valid" lazy-validation ref="form">
         <v-row justify="center">
           <v-col sm="6" xs="12">
